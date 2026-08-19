@@ -1,0 +1,88 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+<Layout title={`${project.data.title} — Daniel`} description={project.data.summary}>
+  <header class="project-header wrap">
+    <div class="tag-row">
+      {project.data.tags.map((tag: string) => <span class="tag">{tag}</span>)}
+      <span class="status-badge">{project.data.status}</span>
+    </div>
+    <h1>{project.data.title}</h1>
+    <p class="summary">{project.data.summary}</p>
+    <div class="card-links" style="margin-top: 1rem;">
+      {project.data.github && <a class="btn" href={project.data.github} target="_blank" rel="noopener">View on GitHub</a>}
+      {project.data.demo && <a class="btn" href={project.data.demo} target="_blank" rel="noopener">Live demo</a>}
+    </div>
+  </header>
+
+  {project.data.cover && (
+    <div class="wrap">
+      <Image
+        src={project.data.cover}
+        alt={project.data.coverAlt ?? project.data.title}
+        width={1200}
+        height={630}
+        class="project-cover"
+      />
+    </div>
+  )}
+
+  <div class="wrap project-body">
+    <div class="markdown-content">
+      <Content />
+    </div>
+
+    {project.data.gallery.length > 0 && (
+      <div class="gallery-grid">
+        {project.data.gallery.map((img) => (
+          <Image src={img.src} alt={img.alt} width={500} height={350} />
+        ))}
+      </div>
+    )}
+
+    {project.data.log.length > 0 && (
+      <div class="timeline">
+        <h2>Build log</h2>
+        {project.data.log
+          .sort((a, b) => a.date.valueOf() - b.date.valueOf())
+          .map((entry) => (
+            <div class="timeline-entry" data-kind={entry.kind}>
+              <span class="kind-label">{entry.kind}</span>
+              <span class="entry-date"> · {dateFmt(entry.date)}</span>
+              <h3>{entry.title}</h3>
+              <p>{entry.body}</p>
+              {entry.image && (
+                <Image
+                  src={entry.image}
+                  alt={entry.imageAlt ?? entry.title}
+                  width={640}
+                  height={360}
+                  class="log-entry-image"
+                />
+              )}
+            </div>
+          ))}
+      </div>
+    )}
+
+    <p><a href="/">&larr; Back to all projects</a></p>
+  </div>
+</Layout>

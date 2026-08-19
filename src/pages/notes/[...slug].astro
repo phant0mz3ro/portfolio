@@ -1,0 +1,52 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+
+export async function getStaticPaths() {
+  const notes = await getCollection('notes');
+  return notes.map((note) => ({
+    params: { slug: note.id },
+    props: { note },
+  }));
+}
+
+interface Props {
+  note: CollectionEntry<'notes'>;
+}
+
+const { note } = Astro.props;
+const { Content } = await render(note);
+const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+---
+<Layout title={`${note.data.title} — Daniel`} description={note.data.summary}>
+  <header class="project-header wrap">
+    <span class="entry-date">{dateFmt(note.data.date)}</span>
+    <h1>{note.data.title}</h1>
+    {note.data.summary && <p class="summary">{note.data.summary}</p>}
+    {note.data.tags.length > 0 && (
+      <div class="tag-row" style="margin-top: 1rem;">
+        {note.data.tags.map((tag: string) => <span class="tag">{tag}</span>)}
+      </div>
+    )}
+  </header>
+
+  {note.data.cover && (
+    <div class="wrap">
+      <Image
+        src={note.data.cover}
+        alt={note.data.coverAlt ?? note.data.title}
+        width={1200}
+        height={630}
+        class="project-cover"
+      />
+    </div>
+  )}
+
+  <div class="wrap project-body">
+    <div class="markdown-content">
+      <Content />
+    </div>
+    <p><a href="/notes/">&larr; Back to all notes</a></p>
+  </div>
+</Layout>

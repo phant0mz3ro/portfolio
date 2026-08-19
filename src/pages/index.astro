@@ -1,0 +1,57 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+
+const allProjects = await getCollection('projects');
+const projects = allProjects.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+<Layout title="Daniel — Projects & Research">
+  <section class="hero wrap">
+    <h1>Hi, I'm Daniel.</h1>
+    <p class="tagline">
+      Mechatronics Engineering student working in computer vision, computational
+      imaging, and robotics perception. This is a build log of what I've made —
+      including the parts that broke first.
+    </p>
+    <div class="cta-row">
+      <a class="btn primary" href="#projects">See projects</a>
+      <a class="btn" href="https://github.com/phant0mz3ro" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </section>
+
+  <section class="wrap" id="projects">
+    <div class="project-grid">
+      {projects.map((project) => (
+        <article class="project-card">
+          {project.data.cover && (
+            <Image
+              src={project.data.cover}
+              alt={project.data.coverAlt ?? project.data.title}
+              width={640}
+              height={360}
+              class="card-thumb"
+            />
+          )}
+          <div class="tag-row">
+            {project.data.tags.map((tag: string) => <span class="tag">{tag}</span>)}
+            <span class="status-badge">{project.data.status}</span>
+          </div>
+          <h2><a href={`/projects/${project.id}/`}>{project.data.title}</a></h2>
+          <p class="summary">{project.data.summary}</p>
+          <div class="card-links">
+            <a href={`/projects/${project.id}/`}>Read the build →</a>
+            {project.data.github && <a href={project.data.github} target="_blank" rel="noopener">GitHub</a>}
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="wrap" id="contact" style="padding-bottom: 4rem;">
+    <h2 style="border-left: 3px solid var(--accent); padding-left: 0.75rem;">Get in touch</h2>
+    <p style="color: var(--text-dim);">
+      [Add your email / LinkedIn / X here — or a short contact form later.]
+    </p>
+  </section>
+</Layout>

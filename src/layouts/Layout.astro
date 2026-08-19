@@ -1,0 +1,57 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "Projects and research in computer vision, computational imaging, and robotics." } = Astro.props;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" />
+    <title>{title}</title>
+  </head>
+  <body>
+    <nav class="site-nav">
+      <div class="wrap">
+        <a class="brand" href="/">daniel.dev</a>
+        <div class="links">
+          <a href="/">Projects</a>
+          <a href="/notes/">Notes</a>
+          <a href="https://github.com/phant0mz3ro" target="_blank" rel="noopener">GitHub</a>
+          <a href="/#contact">Contact</a>
+        </div>
+      </div>
+    </nav>
+    <main>
+      <slot />
+    </main>
+    <footer>
+      <div class="wrap">
+        <p>Built with Astro. &copy; {new Date().getFullYear()} Daniel.</p>
+      </div>
+    </footer>
+    <script>
+      // Scroll-reveal for anything with .project-card or .timeline-entry
+      const revealTargets = document.querySelectorAll('.project-card, .timeline-entry');
+      const observer = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in-view');
+              observer.unobserve(entry.target);
+            }
+          }
+        },
+        { threshold: 0.15 }
+      );
+      revealTargets.forEach((el) => observer.observe(el));
+    </script>
+  </body>
+</html>
