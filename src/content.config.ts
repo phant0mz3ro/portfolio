@@ -18,6 +18,11 @@ const projects = defineCollection({
       gallery: z
         .array(z.object({ src: image(), alt: z.string() }))
         .default([]),
+      // Main demo video: a YouTube/Vimeo URL, OR a local file path like "/videos/demo.mp4"
+      // (local video files go in public/videos/ — Astro's image() pipeline doesn't cover video,
+      // so these are referenced as plain paths, not imported/optimized).
+      video: z.string().optional(),
+      videoCaption: z.string().optional(),
       status: z.enum(['active', 'complete', 'archived']).default('complete'),
       date: z.coerce.date(),
       featured: z.boolean().default(false),
@@ -32,6 +37,8 @@ const projects = defineCollection({
             body: z.string(),
             image: image().optional(),
             imageAlt: z.string().optional(),
+            // Same rule as the top-level video field: YouTube/Vimeo URL or a /videos/... path.
+            video: z.string().optional(),
           })
         )
         .default([]),

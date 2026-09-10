@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import { Image } from 'astro:assets';
+import VideoEmbed from '../../components/VideoEmbed.astro';
 
 export async function getStaticPaths() {
   const projects = await getCollection('projects');
@@ -45,6 +46,12 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', mo
     </div>
   )}
 
+  {project.data.video && (
+    <div class="wrap">
+      <VideoEmbed src={project.data.video} caption={project.data.videoCaption} />
+    </div>
+  )}
+
   <div class="wrap project-body">
     <div class="markdown-content">
       <Content />
@@ -77,6 +84,11 @@ const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', mo
                   height={360}
                   class="log-entry-image"
                 />
+              )}
+              {entry.video && (
+                <div class="log-entry-video">
+                  <VideoEmbed src={entry.video} />
+                </div>
               )}
             </div>
           ))}

@@ -1,0 +1,40 @@
+---
+interface Props {
+  src: string;
+  caption?: string;
+}
+
+const { src, caption } = Astro.props;
+
+function getYouTubeEmbed(url: string): string | null {
+  const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/);
+  return m ? `https://www.youtube.com/embed/${m[1]}` : null;
+}
+
+function getVimeoEmbed(url: string): string | null {
+  const m = url.match(/vimeo\.com\/(\d+)/);
+  return m ? `https://player.vimeo.com/video/${m[1]}` : null;
+}
+
+const youtubeEmbed = getYouTubeEmbed(src);
+const vimeoEmbed = !youtubeEmbed ? getVimeoEmbed(src) : null;
+const embedUrl = youtubeEmbed ?? vimeoEmbed;
+---
+<figure class="video-embed">
+  {embedUrl ? (
+    <div class="video-frame-wrap">
+      <iframe
+        src={embedUrl}
+        title={caption ?? 'Project demo video'}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+        loading="lazy"
+      ></iframe>
+    </div>
+  ) : (
+    <video controls preload="metadata" src={src}>
+      Your browser doesn't support embedded video.
+    </video>
+  )}
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
