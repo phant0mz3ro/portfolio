@@ -1,6 +1,6 @@
 ---
-title: "Hand-tracking Cam"
-summary: "A webcam on a pan-tilt bracket that communicates with a Python script to visually track a hand in frame, utilizing a PI controller to send signals to the bracket's servos."
+title: "Hand-Tracking Camera Rig"
+summary: "A webcam on a pan-tilt bracket communicating with a Python script to visually track a hand in frame. It utilizes a PI controller to send signals to the bracket's servos for smooth, fluid and error-free movement."
 tags: ["Robotics","Control Theory", "Computer Vision"]
 
 github: "https://github.com/phant0mz3ro/followcam"

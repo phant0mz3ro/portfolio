@@ -1,10 +1,10 @@
 ---
-title: "ATM — Ackermann-Steering Robot Car in ROS2 + Gazebo"
-summary: "A simulated robot car with realistic Ackermann steering, built to test navigation and control logic before touching real hardware."
-tags: ["ROS2", "Gazebo", "Robotics", "Simulation"]
-github: "https://github.com/phant0mz3ro-lumen-labs/REPLACE_ME"
+title: "Lensless Imaging"
+summary: "A computational imaging approach to image processing and robot visual perception using bare image sensors, discarding the lens in the process."
+tags: ["Computational Imaging", "Optics", "Vision", "Simulation"]
+github: "https://github.com/phant0mz3ro/securitycam"
 status: "active"
-date: 2026-05-01
+date: 2026-09-01
 featured: true
 log:
   - date: 2026-04-15
