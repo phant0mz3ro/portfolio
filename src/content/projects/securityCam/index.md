@@ -2,7 +2,7 @@
 title: "Network Surveillance System"
 summary: "A piece of software that allows you to manage any camera connected over a network into a single control grid. It further implements video recording, facial recognition and related surveillance functions"
 tags: ["Python", "Mediapipe", "OpenCV"]
-github: "https://github.com/phant0mz3ro/securitycam"
+github: "https://github.com/phant0mz3ro/evereye"
 status: "active"
 date: 2026-05-01
 featured: true # optional
