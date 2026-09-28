@@ -5,10 +5,7 @@ tags: ["Python", "Mediapipe", "OpenCV"]
 github: "https://github.com/phant0mz3ro/securitycam"
 status: "active"
 date: 2026-05-01
-featured: true
-
-cover: "./cover.png"                 # optional
-coverAlt: "Live Video Grid"   # optional
+featured: true # optional
 
 # Gallery — extra screenshots, rendered as a grid at the end of the page.
 gallery:                             # optional, default []
@@ -16,41 +13,19 @@ gallery:                             # optional, default []
     alt: "Facial Recognition"
   - src: "vid.png"
     alt: "Recording Playback"
-
-log:
-  - date: 2026-04-15
-    title: "Why simulate before building hardware"
-    kind: "note"
-    body: >
-      Decided to get the control stack right in Gazebo before committing to a
-      hardware platform — cheaper to fail fast in simulation than to debug motor
-      controllers and wiring at the same time as navigation logic.
-  - date: 2026-04-20
-    title: "Differential-drive controller didn't reflect real steering"
-    kind: "problem"
-    body: >
-      Started with ROS2's default diff-drive plugin, but a real car-like chassis
-      doesn't turn like a differential-drive robot — it has a minimum turning
-      radius and the wheels turn, not spin at different speeds.
-  - date: 2026-04-24
-    title: "Fix: switched to an Ackermann steering plugin"
-    kind: "fix"
-    body: >
-      Rebuilt the URDF with a proper Ackermann steering geometry and swapped in a
-      steering-aware controller plugin, so simulated motion actually matches how
-      a real car chassis would move.
 ---
+![VIDEO GRID](./cover.png)
 
 ## Why this project
 
-[Write the motivation: what you're ultimately building toward, and why the
-simulation-first approach mattered.]
+Recently, I've been involved in a lot of camera work relating to imaging. In an effort to replicate a asurveillance system, I designed an application hub for connecting and managing cameras over a network or connected via caable. I got to know that my country doesn't manufacture surveillance systems for commercial use so I thought coming up with one would be cool, instead of depending on foreign products.
 
-## Approach
+## About
+ The GUI runs on Python's Tkinter. It is easy to use. You navigate to the "Manage Cameras" Tab and scan for connected cameras. Then you name each one and add it to the main grid. You can toggle video recording and facial recognition features. You could also monitor the video feeds remotely using a private VPN service. 
 
-[Architecture: URDF/SDF setup, control stack, what's simulated vs planned for
-real hardware.]
+ I took a brave step trying to deploy the applicaation on a Raspberry Pi 3. The plan was so that the piece of hardware can be used anywhere and so it could be marketable, which is what my boss wants ofcourse. However, the Pi couldn't handle the compute needed, having only 1 GB of RAM
+
 
 ## Current status / what's next
+After a failed deployment, though i learnt a lot from working with a raspberry, i reverted back to the old architecture, a python application. I intend on adding AI analytics and assistance(i'd call her Eva), for example "Hey Eva, did you see a red car today? " "Hey Eva, Describe yesterday's activities". I also plan to use this experience to develop spy camera systems. 
 
-[This one is marked "active" — say where it stands right now.]
