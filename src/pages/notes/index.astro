@@ -6,12 +6,11 @@ const allNotes = await getCollection('notes');
 const notes = allNotes.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 const dateFmt = (d: Date) => d.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
 ---
-<Layout title="Notes — Daniel" description="Shorter notes, learnings, and thoughts — not tied to a specific project.">
+<Layout title="Notes — Daniel" description="Shorter notes and thoughts.">
   <section class="hero wrap">
     <h1>Notes</h1>
     <p class="tagline">
-      Shorter write-ups — things I learned, ideas I'm chewing on, links worth
-      keeping. Not tied to a specific project.
+      They say writing exposes what you actually know, let's see.
     </p>
   </section>
 
